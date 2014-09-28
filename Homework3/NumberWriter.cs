@@ -7,8 +7,11 @@ namespace Homework3 {
         private readonly TextWriter _writer;
 
         public NumberWriter(FileInfo file) {
+            if (File.Exists(file.FullName)) {
+                File.Delete(file.FullName);
+            }
             _writer = new StreamWriter(new BufferedStream(new FileStream(
-                file.FullName, FileMode.Truncate, FileAccess.Write, FileShare.None, 8192, FileOptions.SequentialScan)));
+                file.FullName, FileMode.Create, FileAccess.Write, FileShare.None, 8192, FileOptions.SequentialScan)));
         }
 
         public void WriteIntegers(IEnumerable<long> values) {
