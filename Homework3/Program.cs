@@ -35,12 +35,16 @@ namespace Homework3 {
                 var fileName = new FileInfo(args[1]);
                 if (args[0] == "--createDataFile") {
                     using (var writer = new NumberWriter(fileName)) {
-                        writer.WriteIntegers(Sequence.Create(1000000, 100000000));
+                        writer.WriteIntegers(Sequence.Create(Constants.LowerBound, Constants.UpperBound));
                     }
                 } else if (args[0] == "--processDataFile") {
+                    var startTime = DateTime.Now;
                     using (var reader = new NumberReader(fileName)) {
                         new Calculator().Run(reader);
                     }
+                    var totalSeconds = (DateTime.Now - startTime).TotalSeconds;
+                    Console.WriteLine("Program took {0} seconds to run", totalSeconds);
+                    Console.ReadLine();
                 } else {
                     PrintUsage();
                 }
@@ -65,5 +69,10 @@ namespace Homework3 {
                 Environment.ExitCode = -2;
             }
         }
+    }
+
+    static class Constants {
+        public const long LowerBound = 1000000;
+        public const long UpperBound = 5000000;
     }
 }
