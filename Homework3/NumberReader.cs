@@ -4,23 +4,21 @@ using System.IO;
 
 namespace Homework3 {
     class NumberReader : IDisposable {
-        private readonly TextReader _reader;
+        private readonly string fname;
 
         public NumberReader(FileInfo file) {
-            _reader = new StreamReader(new BufferedStream(new FileStream(
-                file.FullName, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, FileOptions.SequentialScan), 65536));
+            fname = file.FullName;
         }
 
+        //http://cc.davelozinski.com/c-sharp/fastest-way-to-read-text-files
         public IEnumerable<long> ReadIntegers() {
-            string line;
-            while ((line = _reader.ReadLine()) != null) {
-                var value = long.Parse(line);
+            foreach (var l in File.ReadLines(fname))
+            {
+                var value = long.Parse(l);
                 yield return value;
             }
         } 
 
-        public void Dispose() {
-            _reader.Dispose();
-        }
+        public void Dispose() {}
     }
 }

@@ -49,6 +49,7 @@
     <Compile Include="ProgressMonitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sequence.cs" />
+    <Compile Include="shouldBeCheatingCauseItsSoGood.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -8,7 +8,11 @@ namespace Homework3 {
 
         public void Run(NumberReader reader) {
             var results = new List<long>();
-            var numbersToCheck = new Queue<long>();
+            var entries = new Queue<long>();
+
+            foreach (var value in reader.ReadIntegers()) { entries.Enqueue(value); }
+
+            var numbersToCheck = new shouldBeCheatingCauseItsSoGood(entries, entries.Count);
 
             StartComputationThreads(results, numbersToCheck);
 
@@ -16,22 +20,18 @@ namespace Homework3 {
 
             new Thread(progressMonitor.Run) {IsBackground = true}.Start();
             
-            foreach (var value in reader.ReadIntegers()) {
-                numbersToCheck.Enqueue(value);
-            }
-            
-            while (numbersToCheck.Count > 0) {
+            while (numbersToCheck.Count() > 0) {
                 Thread.Sleep(100); // wait for the computation to complete.
             }
             Console.WriteLine("{0} of the numbers were prime", progressMonitor.TotalCount);
         }
 
-        private static void StartComputationThreads(List<long> results, Queue<long> numbersToCheck) {
+        private static void StartComputationThreads(List<long> results, shouldBeCheatingCauseItsSoGood numbersToCheck) {
             var threads = CreateThreads(results, numbersToCheck);
             threads.ForEach(thread => thread.Start());
         }
         
-        private static List<Thread> CreateThreads(List<long> results, Queue<long> numbersToCheck) {
+        private static List<Thread> CreateThreads(List<long> results, shouldBeCheatingCauseItsSoGood numbersToCheck) {
             var threadCount = Environment.ProcessorCount*2;
 
             Console.WriteLine("Using {0} compute threads and 1 I/O thread", threadCount);

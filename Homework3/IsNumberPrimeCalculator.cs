@@ -4,9 +4,9 @@ using System.Collections.Generic;
 namespace Homework3 {
     internal class IsNumberPrimeCalculator {
         private readonly ICollection<long> _primeNumbers;
-        private readonly Queue<long> _numbersToCheck;
+        private readonly shouldBeCheatingCauseItsSoGood _numbersToCheck;
 
-        public IsNumberPrimeCalculator(ICollection<long> primeNumbers, Queue<long> numbersToCheck) {
+        public IsNumberPrimeCalculator(ICollection<long> primeNumbers, shouldBeCheatingCauseItsSoGood numbersToCheck) {
             _primeNumbers = primeNumbers;
             _numbersToCheck = numbersToCheck;
         }
@@ -14,8 +14,12 @@ namespace Homework3 {
         public void CheckIfNumbersArePrime() {
             while (true) {
                 var numberToCheck = _numbersToCheck.Dequeue();
-                if (IsNumberPrime(numberToCheck)) {
-                    _primeNumbers.Add(numberToCheck);
+                if (numberToCheck > -1)
+                {
+                    if (IsNumberPrime(numberToCheck))
+                    {
+                        _primeNumbers.Add(numberToCheck);
+                    }
                 }
             }
         }
