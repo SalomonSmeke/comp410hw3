@@ -31,9 +31,6 @@ namespace Homework3
             return output;
         }
 
-        public long Count()
-        {
-            return list.Count();
-        }
+        public long Count() { return list.Count(); }
     }
 }

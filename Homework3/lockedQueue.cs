@@ -13,32 +13,32 @@ namespace Homework3
         private long init;
         private long complete;
         private SemaphoreSlim STAHP = new SemaphoreSlim(1);
-        public lockedQueue(Queue<long> prebuiltQueue, long count)
+        public lockedQueue(Queue<long> prebuiltQueue, long count) //Initialize with the number of elements. No need to call .Count
         {
             numbersToCheck = prebuiltQueue;
             this.count = count;
-            init = count;
+            init = count; //Numbers this queue was initialized with.
         }
 
-        public long Dequeue()
+        public long Dequeue() //Locked wrapper for Dequeue.
         {
             long output = -1;
             STAHP.Wait();
             if (count > 0)
             {
                 output = numbersToCheck.Dequeue();
-                count--;    
+                count--; //Avoid asking the queue for a count.    
             }
             STAHP.Release();
             return output;
         }
 
-        public bool Done(){ return complete==init; }
+        public bool Done(){ return init==complete; }
 
         public void Consumed() {
-            STAHP.Wait();
-            complete++;
-            STAHP.Release();
+            Interlocked.Increment(ref complete); 
+            //Interocked is amazing. If I did some more restructuring after finding that out
+            //I probably could have gotten another second faster here. A+ 
         }
     }
 }

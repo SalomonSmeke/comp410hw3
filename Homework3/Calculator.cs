@@ -7,12 +7,12 @@ namespace Homework3 {
     internal class Calculator {
 
         public void Run(NumberReader reader) {
-            var results = new lockedList(new List<long>());
+            var results = new lockedList(new List<long>()); //Create a list wrapped in an object thats a little more threadsafe.
             var entries = new Queue<long>();
 
-            foreach (var value in reader.ReadIntegers()) { entries.Enqueue(value); }
+            foreach (var value in reader.ReadIntegers()) entries.Enqueue(value); //Enqueue before to avoid lock contention
 
-            var numbersToCheck = new lockedQueue(entries, entries.Count);
+            var numbersToCheck = new lockedQueue(entries, entries.Count); //Wrap the queue in a threadsafe structure.
 
             StartComputationThreads(results, numbersToCheck);
 
@@ -20,9 +20,10 @@ namespace Homework3 {
 
             new Thread(progressMonitor.Run) { IsBackground = true }.Start();
 
-            while (!numbersToCheck.Done() || !progressMonitor.Clean()) {
-                Thread.Sleep(100); // wait for the computation to complete.
-            }
+            while (!numbersToCheck.Done() || !progressMonitor.Clean()) Thread.Sleep(100); // wait for the computation to complete. Signaled by a clean progmon and empty completed queue.
+            //I thought about changing sleep to depend on how many numbers are left in the queue... but nah too much work.
+            //The order of these is deliberate, since the first check will most usually be the concerning one.
+
             Console.WriteLine("{0} of the numbers were prime", progressMonitor.TotalCount);
         }
 

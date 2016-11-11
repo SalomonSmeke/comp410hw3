@@ -8,19 +8,17 @@ namespace Homework3 {
         public long TotalCount = 0;
         public long count = 0;
         public SemaphoreSlim STAHP = new SemaphoreSlim(1);
-        public ProgressMonitor(lockedList results) {
-            _results = results;
-        }
+
+        public ProgressMonitor(lockedList results) { _results = results; }
 
         public void Run() {
             while (true) {
-                Thread.Sleep(150); // wait for 2/10th of a second
+                Thread.Sleep(150); // wait for 3/20ths of a second
                 STAHP.Wait();
                 count = _results.CountClear();
                 TotalCount += count; // clear out the current primes to save some memory
                 STAHP.Release();
-                if (count != 0)
-                { Console.WriteLine("{0} primes found so far", TotalCount); }
+                if (count != 0) Console.WriteLine("{0} primes found so far", TotalCount);
             }
         }
         

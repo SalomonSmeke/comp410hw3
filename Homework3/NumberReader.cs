@@ -6,9 +6,7 @@ namespace Homework3 {
     class NumberReader : IDisposable {
         private readonly string fname;
 
-        public NumberReader(FileInfo file) {
-            fname = file.FullName;
-        }
+        public NumberReader(FileInfo file) { fname = file.FullName; }
 
         //http://cc.davelozinski.com/c-sharp/fastest-way-to-read-text-files
         public IEnumerable<long> ReadIntegers() {
