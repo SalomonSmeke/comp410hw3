@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculator.cs" />
+    <Compile Include="lockedList.cs" />
     <Compile Include="IsNumberPrimeCalculator.cs" />
     <Compile Include="NumberReader.cs" />
     <Compile Include="NumberWriter.cs" />
@@ -49,7 +50,7 @@
     <Compile Include="ProgressMonitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sequence.cs" />
-    <Compile Include="shouldBeCheatingCauseItsSoGood.cs" />
+    <Compile Include="lockedQueue.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace Homework3 {
     internal class IsNumberPrimeCalculator {
-        private readonly ICollection<long> _primeNumbers;
-        private readonly shouldBeCheatingCauseItsSoGood _numbersToCheck;
+        private readonly lockedList _primeNumbers;
+        private readonly lockedQueue _numbersToCheck;
 
-        public IsNumberPrimeCalculator(ICollection<long> primeNumbers, shouldBeCheatingCauseItsSoGood numbersToCheck) {
+        public IsNumberPrimeCalculator(lockedList primeNumbers, lockedQueue numbersToCheck) {
             _primeNumbers = primeNumbers;
             _numbersToCheck = numbersToCheck;
         }
@@ -20,18 +20,17 @@ namespace Homework3 {
                     {
                         _primeNumbers.Add(numberToCheck);
                     }
+                    _numbersToCheck.Consumed();
                 }
             }
         }
 
         private bool IsNumberPrime(long numberWeAreChecking) {
-            const long firstNumberToCheck = 3;
-
             if (numberWeAreChecking % 2 == 0) {
                 return false;
             }
             var lastNumberToCheck = Math.Sqrt(numberWeAreChecking);
-            for (var currentDivisor = firstNumberToCheck; currentDivisor < lastNumberToCheck; currentDivisor += 2) {
+            for (var currentDivisor = 3; currentDivisor < lastNumberToCheck; currentDivisor += 2) {
                 if (numberWeAreChecking % currentDivisor == 0) {
                     return false;
                 }

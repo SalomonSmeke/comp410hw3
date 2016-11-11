@@ -6,16 +6,18 @@ using System.Threading;
 
 namespace Homework3
 {
-    class shouldBeCheatingCauseItsSoGood
+    class lockedQueue
     {
         private Queue<long> numbersToCheck;
         private long count;
-        private SemaphoreSlim STAHPQueue = new SemaphoreSlim(1);
+        private long init;
+        private long complete;
         private SemaphoreSlim STAHP = new SemaphoreSlim(1);
-        public shouldBeCheatingCauseItsSoGood(Queue<long> prebuiltQueue, long count)
+        public lockedQueue(Queue<long> prebuiltQueue, long count)
         {
             numbersToCheck = prebuiltQueue;
             this.count = count;
+            init = count;
         }
 
         public long Dequeue()
@@ -31,13 +33,12 @@ namespace Homework3
             return output;
         }
 
-        public long Count()
-        {
-            long output;
+        public bool Done(){ return complete==init; }
+
+        public void Consumed() {
             STAHP.Wait();
-            output = count;
+            complete++;
             STAHP.Release();
-            return output;
         }
     }
 }
