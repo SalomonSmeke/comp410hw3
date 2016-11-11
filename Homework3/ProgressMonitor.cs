@@ -13,7 +13,7 @@ namespace Homework3 {
 
         public void Run() {
             while (true) {
-                Thread.Sleep(100); // wait for 3/20ths of a second
+                Thread.Sleep(100); // wait for 1/10th of a second
                 STAHP.Wait();
                 count = _results.CountClear();
                 TotalCount += count; // clear out the current primes to save some memory
